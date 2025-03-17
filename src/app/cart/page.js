@@ -1,16 +1,22 @@
+'use client'; /* reduce will be on client side only */
 import styles from './page.module.css';
-
-
-const cartItems = [
-    { id: 1, name: 'Item 1', price: 100 },
-    { id: 2, name: 'Item 2', price: 200 },
-    { id: 3, name: 'Item 3', price: 300 },
-];
-
-const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0);
-
+import { CartAtom } from '../store/CartAtom';
+import { useAtom } from 'jotai';
+import { useState, useEffect } from 'react';
 
 const Cart = () => {
+    const [cartItems, setCartItems] = useAtom(CartAtom);
+    const [totalPrice, setTotalPrice] = useState(0);
+    useEffect( /* will update the state each time the cart is update*/
+        () => {
+            const newTotalPrice = cartItems.reduce((acc, item) => acc + item.price, 0);
+            setTotalPrice(newTotalPrice);
+        },
+        [cartItems]); 
+    const emptyCart = () => {
+        setCartItems([]);
+    }
+
     return (
         <div className={styles.container}>
             <h1 className={styles.mainHeader}>Your Cart</h1>
@@ -35,7 +41,7 @@ const Cart = () => {
 
             <div className={styles.actions}>
                 <button className={styles.payButton}>Pay Now</button>
-                <button className={styles.emptyButton}>Empty the Cart</button>
+                <button className={styles.emptyButton} onClick={emptyCart}>Empty the Cart</button>
             </div>
 
 

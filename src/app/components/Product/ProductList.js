@@ -1,22 +1,19 @@
 import ProductCard from "./ProductCard";
-import Link from 'next/link';
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, onProductAddClicked }) => {
     return (
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
             {
                 products.map((product) => {
                     return (
-                        <Link
+                        <ProductCard
                             key={product.id}
-                            href={`/products/${product.id}`}
-                            passHref >
-                            <ProductCard
-                                image={product.image}
-                                name={product.name}
-                                price={product.price}
-                            />
-                        </Link>
+                            id={product.id}
+                            image={product.image}
+                            name={product.name}
+                            price={product.price}
+                            onClick={() => onProductAddClicked(product)}
+                        />
                     )
                 })
             }
