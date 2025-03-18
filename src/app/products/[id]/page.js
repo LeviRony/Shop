@@ -4,7 +4,7 @@ import styles from './page.module.css'
 import { useSetAtom } from 'jotai';
 import { useState, useEffect } from 'react';
 import { useParams } from "next/navigation";
-import cartAtom from '../../store/CartAtom';
+import { cartAtom } from '../../store/CartAtom';
 
 
 export default function ProductDetails() {
