@@ -4,12 +4,6 @@ import ProductList from '../components/Product/ProductList';
 import { useSetAtom } from 'jotai';
 import { CartAtom } from '../store/CartAtom';
 
-const products = [
-    { id: 1, image: 'https://placehold.co/600x400', name: 'Sample Product 1', price: 299.99 },
-    { id: 2, image: 'https://placehold.co/600x400', name: 'Sample Product 2', price: 19.99 },
-    { id: 3, image: 'https://placehold.co/600x400', name: 'Sample Product 3', price: 39.99 },
-];
-
 export default function Products() {
     const setCartItems = useSetAtom(CartAtom);
 
