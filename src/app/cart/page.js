@@ -1,11 +1,11 @@
 'use client'; /* reduce will be on client side only */
 import styles from './page.module.css';
-import { CartAtom } from '../store/CartAtom';
+import { cartAtom } from '../store/CartAtom';
 import { useAtom } from 'jotai';
 import { useState, useEffect } from 'react';
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useAtom(CartAtom);
+    const [cartItems, setCartItems] = useAtom(cartAtom);
     const [totalPrice, setTotalPrice] = useState(0);
     useEffect( /* will update the state each time the cart is update*/
         () => {
