@@ -17,6 +17,7 @@
     margin-bottom: 20px;
     height: 300px; /* Limit the height of the review list */
     overflow-y: auto; /* Add vertical scrolling when the content overflows */
+    color: #333;
   }
   
   .reviewCard {
