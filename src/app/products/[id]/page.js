@@ -2,12 +2,11 @@
 
 import styles from './page.module.css'
 import { useSetAtom } from 'jotai';
-import { useState, useEffect } from 'react';
-import { useParams } from "next/navigation";
 import { cartAtom } from '../../store/CartAtom';
+import { useState, useEffect } from 'react';
 
 
-export default function ProductDetails() {
+export default function ProductDetails({ params }) {
     const [product, setProduct] = useState({
         name: '',
         description: '',
@@ -17,7 +16,7 @@ export default function ProductDetails() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const { id } = useParams;
+    const { id } = params;
 
     useEffect(() => {
         const fetchProduct = async () => {

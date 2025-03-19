@@ -19,17 +19,23 @@ const Reviews = () => {
 
     const reviewsContainerRef = useRef(null);
 
+    
     useEffect(() => {
         const fetchReviews = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/reviews?${page}&limit=8');
+                const response = await fetch(`http://localhost:3001/api/reviews?page=${page}&limit=5`);
 
-                if (!response.ok) {
+                if(!response.ok) {
                     throw new Error('Failed to fetch reviews');
                 }
 
                 const data = await response.json();
-                setReviews((prevReviews)=> [...prevReviews, ...data]);
+                setReviews((prevReviews) => [...prevReviews, ...data]);
+
+
+                if(data.length === 0) {
+                    setFetching(false);
+                }
             } catch (e) {
                 setError(e.message);
             } finally {
@@ -38,8 +44,19 @@ const Reviews = () => {
         };
 
         fetchReviews();
-    }
-        , []);
+     }
+    , [page]);
+
+
+    useEffect(() => {
+        const container = reviewsContainerRef.current;
+        container.addEventListener('scroll', handleScroll);
+
+        return () => {
+            container.removeEventListener('scroll', handleScroll);
+        };
+
+    }, [loading, fetching]);
 
     const handleScroll = () => {
         if (reviewsContainerRef.current) {
@@ -66,7 +83,7 @@ const Reviews = () => {
 
         if (newReview.reviewerName && newReview.content) {
             try {
-                const response = await fetch('http://localhost:8080/api/reviews', {
+                const response = await fetch('http://localhost:3001/api/reviews', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -74,21 +91,21 @@ const Reviews = () => {
                     body: JSON.stringify(newReview),
                 });
 
-                if (!response.ok) {
+                if(!response.ok) {
                     throw new Error('Failed to send review');
                 }
 
                 setReviews(prevReviews => {
                     return [...prevReviews, { ...newReview }]
                 });
-
+    
                 setNewReview(
                     {
                         reviewerName: '',
                         content: '',
                     }
                 );
-            } catch (e) {
+            } catch(e) {
                 alert('Failed to send review,please try again later');
             }
         }
@@ -107,11 +124,11 @@ const Reviews = () => {
                 error && <p>{error}</p>
             }
 
-            <ReviewList
+            <ReviewList 
                 reviews={reviews}
                 reviewsContainerRef={reviewsContainerRef}
             />
-            <ReviewForm
+            <ReviewForm 
                 newReview={newReview}
                 handleNewReviewNameChange={handleNewReviewNameChange}
                 handleSendNewReview={handleSendNewReview}

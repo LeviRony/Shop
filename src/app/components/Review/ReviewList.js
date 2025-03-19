@@ -1,9 +1,9 @@
 import ReviewCard from './ReviewCard';
 import styles from './ReviewList.module.css';
 
-const ReviewList = ({ reviews }) => {
+const ReviewList = ({ reviews, reviewsContainerRef }) => {
     return (
-        <div className={styles.reviewList}>
+        <div className={styles.reviewList} ref={reviewsContainerRef}>
             {
                 reviews.map((review) => {
                     return (
